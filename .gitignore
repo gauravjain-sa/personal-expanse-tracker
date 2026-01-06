@@ -230,6 +230,12 @@ test_*.py
 debug_*.py
 *.tmp
 
+# Windows reserved names
+nul
+con
+prn
+aux
+
 # Temporary data files
 *.bak
 *.backup

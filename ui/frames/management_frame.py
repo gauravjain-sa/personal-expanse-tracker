@@ -114,21 +114,27 @@ class ManagementFrame(BaseFrame):
         header.pack(fill="x", pady=(0, 5))
 
         headers_data = [
-            ("Account Name", 0.25),
-            ("Type", 0.15),
-            ("Balance", 0.15),
-            ("Currency", 0.10),
-            ("Notes", 0.35)
+            ("Account Name", 200, "w"),
+            ("Type", 120, "w"),
+            ("Balance", 120, "e"),
+            ("Currency", 80, "center"),
+            ("Notes", None, "w")  # Expandable
         ]
 
-        for text, weight in headers_data:
+        for text, width, anchor in headers_data:
             label = ctk.CTkLabel(
                 header,
                 text=text,
                 font=Config.get_font('subtitle'),
-                text_color="white"
+                text_color="white",
+                anchor=anchor
             )
-            label.pack(side="left", padx=15, pady=10, fill="x", expand=True if weight > 0.2 else False)
+            if width:
+                label.configure(width=width)
+                label.pack(side="left", padx=15, pady=10)
+            else:
+                # Expandable column (Notes)
+                label.pack(side="left", padx=15, pady=10, fill="x", expand=True)
 
         # Display accounts
         for account in accounts:
@@ -251,21 +257,27 @@ class ManagementFrame(BaseFrame):
         header.pack(fill="x", pady=(0, 5))
 
         headers_data = [
-            ("Icon", 0.08),
-            ("Category Name", 0.25),
-            ("Type", 0.12),
-            ("Description", 0.45),
-            ("Created", 0.10)
+            ("Icon", 40),
+            ("Category Name", 200),
+            ("Type", 100),
+            ("Description", None),  # Expandable
+            ("Created", 90)
         ]
 
-        for text, weight in headers_data:
+        for text, width in headers_data:
             label = ctk.CTkLabel(
                 header,
                 text=text,
                 font=Config.get_font('subtitle'),
-                text_color="white"
+                text_color="white",
+                anchor="center" if width and width < 100 else "w"
             )
-            label.pack(side="left", padx=15, pady=10, fill="x", expand=True if weight > 0.2 else False)
+            if width:
+                label.configure(width=width)
+                label.pack(side="left", padx=15, pady=10)
+            else:
+                # Expandable column
+                label.pack(side="left", padx=15, pady=10, fill="x", expand=True)
 
         # Display categories
         for category in categories:
@@ -305,8 +317,8 @@ class ManagementFrame(BaseFrame):
 
         # Type
         category_type = category.type or "-"
-        type_color = Config.COLORS['success'] if category_type == 'income' else (
-            Config.COLORS['error'] if category_type == 'expense' else Config.COLORS['text_secondary']
+        type_color = Config.COLORS['success'] if category_type == 'credit' else (
+            Config.COLORS['error'] if category_type == 'debit' else Config.COLORS['text_secondary']
         )
         type_label = ctk.CTkLabel(
             row,

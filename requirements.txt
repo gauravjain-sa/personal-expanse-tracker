@@ -2,6 +2,7 @@
 
 # UI Framework
 customtkinter>=5.2.0
+Pillow>=10.0.0
 
 # Database
 SQLAlchemy>=2.0.0
@@ -12,3 +13,6 @@ tkcalendar>=1.6.1
 
 # Export
 openpyxl>=3.1.2
+
+# Build Tools (for packaging)
+pyinstaller>=6.0.0

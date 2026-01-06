@@ -331,7 +331,7 @@ class FilterPanel(ctk.CTkFrame):
                 - end_date: date or None
                 - account_id: int or None
                 - category_id: int or None
-                - transaction_type: str or None ('income' or 'expense')
+                - transaction_type: str or None ('credit' or 'debit')
                 - search_term: str or None
         """
         filters = {}

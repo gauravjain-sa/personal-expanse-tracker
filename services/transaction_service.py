@@ -37,7 +37,7 @@ class TransactionService:
         Args:
             date: Transaction date
             amount: Amount (positive)
-            transaction_type: 'income' or 'expense'
+            transaction_type: 'credit' or 'debit'
             account_id: Account ID
             category_id: Category ID (optional)
             description: Description (optional)
@@ -417,7 +417,7 @@ class TransactionService:
             end_date: End date filter (optional)
             account_id: Account ID filter (optional)
             category_id: Category ID filter (optional)
-            transaction_type: Type filter ('income', 'expense', or None for all)
+            transaction_type: Type filter ('credit', 'debit', or None for all)
             search_term: Search term for description/merchant/notes (optional)
 
         Returns:

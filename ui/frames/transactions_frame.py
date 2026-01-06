@@ -274,9 +274,9 @@ class TransactionsFrame(BaseFrame):
             # Filter transactions by view
             view = self.current_view.get()
             if view == 'credits':
-                transactions = [t for t in self.all_transactions if t.transaction_type == 'income']
+                transactions = [t for t in self.all_transactions if t.transaction_type == 'credit']
             elif view == 'debits':
-                transactions = [t for t in self.all_transactions if t.transaction_type == 'expense']
+                transactions = [t for t in self.all_transactions if t.transaction_type == 'debit']
             else:  # combined
                 transactions = self.all_transactions
 
@@ -323,14 +323,26 @@ class TransactionsFrame(BaseFrame):
         ]
 
         for text, col, width in headers:
+            # Determine alignment based on column
+            if col <= 3:  # Date, Description, Account, Category - left align
+                sticky = "w"
+                anchor = "w"
+            elif col <= 5:  # Debit, Credit - right align
+                sticky = "e"
+                anchor = "e"
+            else:  # Actions - right align
+                sticky = "e"
+                anchor = "e"
+
             label = ctk.CTkLabel(
                 header,
                 text=text,
                 font=Config.get_font('subtitle'),
                 text_color="white",
-                width=width
+                width=width,
+                anchor=anchor
             )
-            label.grid(row=0, column=col, padx=10, pady=10, sticky="w" if col <= 1 else "ew")
+            label.grid(row=0, column=col, padx=10, pady=10, sticky=sticky)
 
     def _create_accounting_row(self, transaction: Transaction):
         """
@@ -608,6 +620,10 @@ class TransactionsFrame(BaseFrame):
                 end_date=end_date
             )
 
+            # Check if user cancelled
+            if filepath is None:
+                return
+
             self.show_success(f"Exported to: {filepath}")
 
         except ImportError:
@@ -642,6 +658,10 @@ class TransactionsFrame(BaseFrame):
                 transactions,
                 filename=filename
             )
+
+            # Check if user cancelled
+            if filepath is None:
+                return
 
             self.show_success(f"Exported to: {filepath}")
 

@@ -87,23 +87,28 @@ class AccountsFrame(BaseFrame):
             header.pack(fill="x", pady=(0, 5))
 
             headers_data = [
-                ("Account Name", 0.25),
-                ("Type", 0.15),
-                ("Balance", 0.15),
-                ("Currency", 0.10),
-                ("Notes", 0.25),
-                ("Actions", 0.10)
+                ("Account Name", 200, "w"),
+                ("Type", 120, "w"),
+                ("Balance", 120, "e"),
+                ("Currency", 80, "center"),
+                ("Notes", None, "w"),  # Expandable
+                ("Actions", 90, "center")
             ]
 
-            for text, weight in headers_data:
+            for text, width, anchor in headers_data:
                 label = ctk.CTkLabel(
                     header,
                     text=text,
                     font=Config.get_font('subtitle'),
-                    text_color="white"
+                    text_color="white",
+                    anchor=anchor
                 )
-                label.pack(side="left", padx=15, pady=10, fill="x",
-                          expand=True if weight > 0.2 else False)
+                if width:
+                    label.configure(width=width)
+                    label.pack(side="left", padx=15, pady=10)
+                else:
+                    # Expandable column (Notes)
+                    label.pack(side="left", padx=15, pady=10, fill="x", expand=True)
 
             # Display accounts as list rows
             for account in accounts:
@@ -113,112 +118,108 @@ class AccountsFrame(BaseFrame):
             print(f"Error loading accounts: {e}")
             self.show_error("Failed to load accounts")
 
-    def _create_account_card(self, account, row: int, col: int):
+    def _create_account_row(self, account):
         """
-        Create account card
+        Create account row in list view
 
         Args:
             account: Account object
-            row: Grid row
-            col: Grid column
         """
-        card = CardWidget(self.accounts_container)
-        card.grid(row=row, column=col, padx=10, pady=10, sticky="ew")
-
-        # Account type icon
-        type_icons = {
-            'bank': '🏦',
-            'credit_card': '💳',
-            'cash': '💵',
-            'wallet': '👛',
-            'investment': '📈',
-            'person': '👤',
-            'loan': '💰',
-            'factory': '🏭',
-            'property': '🏠',
-            'other': '📋'
-        }
-        icon = type_icons.get(account.account_type, '💼')
-
-        # Icon and name
-        header = ctk.CTkFrame(card, fg_color="transparent")
-        card.add_content(header)
-        header.grid_columnconfigure(1, weight=1)
-
-        icon_label = ctk.CTkLabel(
-            header,
-            text=icon,
-            font=('', 32)
+        row = ctk.CTkFrame(
+            self.accounts_container,
+            fg_color=Config.COLORS['surface'],
+            corner_radius=8,
+            border_width=1,
+            border_color=Config.COLORS['border']
         )
-        icon_label.grid(row=0, column=0, padx=(0, 10))
+        row.pack(fill="x", pady=2)
 
+        # Account Name
         name_label = ctk.CTkLabel(
-            header,
+            row,
             text=account.name,
-            font=Config.get_font('subtitle'),
-            text_color=Config.COLORS['text_primary']
+            font=Config.get_font('body'),
+            text_color=Config.COLORS['text'],
+            anchor="w"
         )
-        name_label.grid(row=0, column=1, sticky="w")
+        name_label.pack(side="left", padx=15, pady=12)
+        name_label.configure(width=200)
 
-        # Account type (if provided)
-        if account.account_type:
-            type_label = ctk.CTkLabel(
-                card,
-                text=account.account_type,
-                font=Config.get_font('small'),
-                text_color=Config.COLORS['text_secondary']
-            )
-            card.add_content(type_label)
-
-        card.add_separator()
+        # Type
+        account_type = account.account_type or "-"
+        type_label = ctk.CTkLabel(
+            row,
+            text=account_type,
+            font=Config.get_font('small'),
+            text_color=Config.COLORS['text_secondary'],
+            anchor="w"
+        )
+        type_label.pack(side="left", padx=15, pady=12)
+        type_label.configure(width=120)
 
         # Balance
+        balance_color = Config.COLORS['success'] if account.current_balance >= 0 else Config.COLORS['error']
         balance_label = ctk.CTkLabel(
-            card,
-            text="Balance",
+            row,
+            text=f"{Config.CURRENCY_SYMBOL}{account.current_balance:,.2f}",
+            font=Config.get_font('body'),
+            text_color=balance_color,
+            anchor="e"
+        )
+        balance_label.pack(side="left", padx=15, pady=12)
+        balance_label.configure(width=120)
+
+        # Currency
+        currency_label = ctk.CTkLabel(
+            row,
+            text=account.currency or Config.DEFAULT_CURRENCY,
             font=Config.get_font('small'),
-            text_color=Config.COLORS['text_secondary']
+            text_color=Config.COLORS['text_secondary'],
+            anchor="center"
         )
-        card.add_content(balance_label)
+        currency_label.pack(side="left", padx=15, pady=12)
+        currency_label.configure(width=80)
 
-        balance_value = ctk.CTkLabel(
-            card,
-            text=account.balance_formatted,
-            font=Config.get_font('heading'),
-            text_color=Config.COLORS['primary']
+        # Notes
+        notes = account.notes or "-"
+        notes_label = ctk.CTkLabel(
+            row,
+            text=notes[:30] + "..." if len(notes) > 30 else notes,
+            font=Config.get_font('small'),
+            text_color=Config.COLORS['text_secondary'],
+            anchor="w"
         )
-        card.add_content(balance_value)
+        notes_label.pack(side="left", padx=15, pady=12, fill="x", expand=True)
 
-        card.add_separator()
-
-        # Buttons frame
-        button_frame = ctk.CTkFrame(card, fg_color="transparent")
-        card.add_content(button_frame)
-        button_frame.grid_columnconfigure((0, 1), weight=1)
+        # Action buttons
+        button_frame = ctk.CTkFrame(row, fg_color="transparent")
+        button_frame.pack(side="right", padx=10, pady=8)
 
         # Edit button
         edit_btn = ctk.CTkButton(
             button_frame,
-            text="✏️ Edit",
+            text="✏️",
             command=lambda a=account: self._edit_account(a),
             fg_color=Config.COLORS['primary'],
             hover_color=Config.COLORS['primary_hover'],
             font=Config.get_font('body'),
+            width=40,
             height=32
         )
-        edit_btn.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        edit_btn.pack(side="left", padx=2)
 
         # Delete button
         delete_btn = ctk.CTkButton(
             button_frame,
-            text="🗑️ Delete",
+            text="🗑️",
             command=lambda a=account: self._delete_account(a),
             fg_color=Config.COLORS['error'],
             hover_color=Config.COLORS['error'],
             font=Config.get_font('body'),
+            width=40,
             height=32
         )
-        delete_btn.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+        delete_btn.pack(side="left", padx=2)
 
     def _add_account(self):
         """Add new account"""

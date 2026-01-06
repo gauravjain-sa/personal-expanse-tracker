@@ -12,7 +12,7 @@ from config import Config
 
 def seed_default_categories() -> bool:
     """
-    Seed default expense and income categories
+    Seed default debit and credit categories
 
     Returns:
         True if successful, False otherwise
@@ -29,74 +29,28 @@ def seed_default_categories() -> bool:
 
         print("  Creating default categories...")
 
-        # Default expense categories (from Config)
-        expense_categories = [
-            # Food & Dining
-            {'name': 'Groceries', 'type': 'expense', 'icon': '🛒'},
-            {'name': 'Restaurants', 'type': 'expense', 'icon': '🍽️'},
-            {'name': 'Cafes', 'type': 'expense', 'icon': '☕'},
-
-            # Transportation
-            {'name': 'Public Transport', 'type': 'expense', 'icon': '🚇'},
-            {'name': 'Fuel', 'type': 'expense', 'icon': '⛽'},
-            {'name': 'Vehicle Maintenance', 'type': 'expense', 'icon': '🔧'},
-            {'name': 'Taxi/Ride Share', 'type': 'expense', 'icon': '🚕'},
-
-            # Housing
-            {'name': 'Rent', 'type': 'expense', 'icon': '🏠'},
-            {'name': 'Utilities', 'type': 'expense', 'icon': '💡'},
-            {'name': 'Internet', 'type': 'expense', 'icon': '🌐'},
-            {'name': 'Phone', 'type': 'expense', 'icon': '📱'},
-            {'name': 'Home Maintenance', 'type': 'expense', 'icon': '🔨'},
-
-            # Shopping
-            {'name': 'Clothing', 'type': 'expense', 'icon': '👕'},
-            {'name': 'Electronics', 'type': 'expense', 'icon': '💻'},
-            {'name': 'Books', 'type': 'expense', 'icon': '📚'},
-            {'name': 'General Shopping', 'type': 'expense', 'icon': '🛍️'},
-
-            # Health & Fitness
-            {'name': 'Medical', 'type': 'expense', 'icon': '🏥'},
-            {'name': 'Pharmacy', 'type': 'expense', 'icon': '💊'},
-            {'name': 'Gym', 'type': 'expense', 'icon': '💪'},
-            {'name': 'Sports', 'type': 'expense', 'icon': '⚽'},
-
-            # Entertainment
-            {'name': 'Movies', 'type': 'expense', 'icon': '🎬'},
-            {'name': 'Streaming Services', 'type': 'expense', 'icon': '📺'},
-            {'name': 'Games', 'type': 'expense', 'icon': '🎮'},
-            {'name': 'Hobbies', 'type': 'expense', 'icon': '🎨'},
-
-            # Financial
-            {'name': 'Insurance', 'type': 'expense', 'icon': '🛡️'},
-            {'name': 'Taxes', 'type': 'expense', 'icon': '📋'},
-            {'name': 'Bank Fees', 'type': 'expense', 'icon': '🏦'},
-            {'name': 'Investments', 'type': 'expense', 'icon': '📈'},
-
-            # Personal
-            {'name': 'Personal Care', 'type': 'expense', 'icon': '💇'},
-            {'name': 'Education', 'type': 'expense', 'icon': '🎓'},
-            {'name': 'Gifts', 'type': 'expense', 'icon': '🎁'},
-            {'name': 'Charity', 'type': 'expense', 'icon': '❤️'},
-
-            # Other
-            {'name': 'Other Expenses', 'type': 'expense', 'icon': '📝'},
+        # Default debit categories (generic high-level)
+        debit_categories = [
+            {'name': 'Food & Dining', 'type': 'debit', 'icon': '🍽️'},
+            {'name': 'Transportation', 'type': 'debit', 'icon': '🚗'},
+            {'name': 'Shopping', 'type': 'debit', 'icon': '🛒'},
+            {'name': 'Bills & Utilities', 'type': 'debit', 'icon': '💡'},
+            {'name': 'Healthcare', 'type': 'debit', 'icon': '🏥'},
+            {'name': 'Entertainment', 'type': 'debit', 'icon': '🎬'},
+            {'name': 'Education', 'type': 'debit', 'icon': '🎓'},
+            {'name': 'Other Debits', 'type': 'debit', 'icon': '📝'},
         ]
 
-        # Default income categories
-        income_categories = [
-            {'name': 'Salary', 'type': 'income', 'icon': '💼'},
-            {'name': 'Freelance', 'type': 'income', 'icon': '💻'},
-            {'name': 'Business', 'type': 'income', 'icon': '🏢'},
-            {'name': 'Investment Returns', 'type': 'income', 'icon': '📊'},
-            {'name': 'Rental Income', 'type': 'income', 'icon': '🏘️'},
-            {'name': 'Gifts Received', 'type': 'income', 'icon': '🎁'},
-            {'name': 'Refunds', 'type': 'income', 'icon': '💵'},
-            {'name': 'Other Income', 'type': 'income', 'icon': '💰'},
+        # Default credit categories (generic high-level)
+        credit_categories = [
+            {'name': 'Salary/Wages', 'type': 'credit', 'icon': '💼'},
+            {'name': 'Business Income', 'type': 'credit', 'icon': '🏢'},
+            {'name': 'Investment Returns', 'type': 'credit', 'icon': '📊'},
+            {'name': 'Other Credits', 'type': 'credit', 'icon': '💰'},
         ]
 
         # Combine all categories
-        all_categories = expense_categories + income_categories
+        all_categories = debit_categories + credit_categories
 
         # Create category objects
         for cat_data in all_categories:

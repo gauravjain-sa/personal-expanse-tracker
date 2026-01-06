@@ -48,8 +48,8 @@ class Config:
     SECONDARY: str = "#14375e"
 
     # Status colors
-    SUCCESS: str = "#2fa572"    # Green (income)
-    DANGER: str = "#e74c3c"     # Red (expenses)
+    SUCCESS: str = "#2fa572"    # Green (credits)
+    DANGER: str = "#e74c3c"     # Red (debits)
     WARNING: str = "#f39c12"    # Orange
     INFO: str = "#3498db"       # Blue
 
@@ -106,7 +106,7 @@ class Config:
     # Account types - removed hardcoding, users manage these from UI
 
     # Transaction types
-    TRANSACTION_TYPES: list = ["Income", "Expense", "Transfer"]
+    TRANSACTION_TYPES: list = ["Credit", "Debit", "Transfer"]
 
     # Transaction directions
     DIRECTIONS: list = ["Debit", "Credit"]

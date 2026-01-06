@@ -169,9 +169,9 @@ class DashboardFrame(BaseFrame):
 
         # Amount
         amount = transaction.get('amount', '$0.00')
-        trans_type = transaction.get('type', 'expense')
+        trans_type = transaction.get('type', 'debit')
 
-        amount_color = Config.COLORS['success'] if trans_type == 'income' else Config.COLORS['error']
+        amount_color = Config.COLORS['success'] if trans_type == 'credit' else Config.COLORS['error']
 
         amount_label = ctk.CTkLabel(
             row,

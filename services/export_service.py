@@ -4,9 +4,10 @@ Handles exporting transactions to Excel and CSV formats with accounting-style di
 """
 import csv
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Optional
 from datetime import datetime, date
 from decimal import Decimal
+from tkinter import filedialog
 
 try:
     from openpyxl import Workbook
@@ -34,7 +35,7 @@ class ExportService:
         filename: str = None,
         start_date: date = None,
         end_date: date = None
-    ) -> Path:
+    ) -> Optional[Path]:
         """
         Export transactions to Excel file with two sheets
 
@@ -45,7 +46,7 @@ class ExportService:
             end_date: Optional end date for period label
 
         Returns:
-            Path to created Excel file
+            Path to created Excel file, or None if user cancelled
 
         Raises:
             ImportError: If openpyxl is not installed
@@ -57,7 +58,7 @@ class ExportService:
                 "Install it with: pip install openpyxl"
             )
 
-        # Generate filename if not provided
+        # Generate default filename if not provided
         if not filename:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"transactions_{timestamp}"
@@ -66,7 +67,20 @@ class ExportService:
         if not filename.endswith('.xlsx'):
             filename += '.xlsx'
 
-        filepath = self.export_dir / filename
+        # Ask user to choose save location
+        filepath = filedialog.asksaveasfilename(
+            title="Save Excel Export",
+            initialdir=str(self.export_dir),
+            initialfile=filename,
+            defaultextension=".xlsx",
+            filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")]
+        )
+
+        # User cancelled
+        if not filepath:
+            return None
+
+        filepath = Path(filepath)
 
         # Create workbook
         wb = Workbook()
@@ -186,8 +200,8 @@ class ExportService:
             ("", ""),
             ("Net Balance:", f"Rs. {summary['net_balance']:,.2f}"),
             ("", ""),
-            ("Credit Transactions:", summary['income_count']),
-            ("Debit Transactions:", summary['expense_count']),
+            ("Credit Transactions:", summary['credit_count']),
+            ("Debit Transactions:", summary['debit_count']),
         ]
 
         for label, value in summary_data:
@@ -212,7 +226,7 @@ class ExportService:
         self,
         transactions: List[Transaction],
         filename: str = None
-    ) -> Path:
+    ) -> Optional[Path]:
         """
         Export transactions to CSV file
 
@@ -221,9 +235,9 @@ class ExportService:
             filename: Optional custom filename (without extension)
 
         Returns:
-            Path to created CSV file
+            Path to created CSV file, or None if user cancelled
         """
-        # Generate filename if not provided
+        # Generate default filename if not provided
         if not filename:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"transactions_{timestamp}"
@@ -232,7 +246,20 @@ class ExportService:
         if not filename.endswith('.csv'):
             filename += '.csv'
 
-        filepath = self.export_dir / filename
+        # Ask user to choose save location
+        filepath = filedialog.asksaveasfilename(
+            title="Save CSV Export",
+            initialdir=str(self.export_dir),
+            initialfile=filename,
+            defaultextension=".csv",
+            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")]
+        )
+
+        # User cancelled
+        if not filepath:
+            return None
+
+        filepath = Path(filepath)
 
         # Write CSV
         with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
@@ -292,16 +319,16 @@ class ExportService:
         """
         total_credits = Decimal('0')
         total_debits = Decimal('0')
-        income_count = 0
-        expense_count = 0
+        credit_count = 0
+        debit_count = 0
 
         for transaction in transactions:
             if transaction.transaction_type == 'credit':
                 total_credits += Decimal(str(transaction.amount))
-                income_count += 1
+                credit_count += 1
             elif transaction.transaction_type == 'debit':
                 total_debits += Decimal(str(transaction.amount))
-                expense_count += 1
+                debit_count += 1
 
         net_balance = total_credits - total_debits
 
@@ -310,6 +337,6 @@ class ExportService:
             'total_credits': float(total_credits),
             'total_debits': float(total_debits),
             'net_balance': float(net_balance),
-            'income_count': income_count,
-            'expense_count': expense_count
+            'credit_count': credit_count,
+            'debit_count': debit_count
         }

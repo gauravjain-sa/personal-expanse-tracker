@@ -22,7 +22,7 @@ class CategoryRepository(BaseRepository[Category]):
 
         Args:
             name: Category name
-            type: Category type ('income' or 'expense')
+            type: Category type ('credit' or 'debit')
 
         Returns:
             Category if found, None otherwise
@@ -41,7 +41,7 @@ class CategoryRepository(BaseRepository[Category]):
         Get all categories of specific type
 
         Args:
-            type: Category type ('income' or 'expense')
+            type: Category type ('credit' or 'debit')
             include_inactive: Include inactive categories
 
         Returns:
