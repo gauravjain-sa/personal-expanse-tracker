@@ -1,0 +1,307 @@
+# Expense Tracker - Git Ignore File
+# Prevents sensitive financial data from being committed to repository
+
+# ==================== DATABASE FILES ====================
+# CRITICAL: Never commit database files (contain financial data)
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+expense_tracker.db
+
+# ==================== APPLICATION DATA ====================
+# User data directories
+backups/
+exports/
+logs/
+
+# User-specific data
+/data/
+*.csv
+*.xlsx
+*.xls
+
+# ==================== PYTHON ====================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.env.local
+.env.*.local
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# ==================== IDE / EDITORS ====================
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ==================== OPERATING SYSTEM ====================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ==================== SECURITY ====================
+# CRITICAL: Never commit these files
+secrets.txt
+secrets.json
+credentials.json
+credentials.txt
+*.pem
+*.key
+*.cert
+*.p12
+.secrets/
+id_rsa
+id_rsa.pub
+*.ppk
+
+# API keys and tokens
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# ==================== TEMPORARY FILES ====================
+# Temporary Python files
+scratch.py
+temp.py
+test_*.py
+debug_*.py
+*.tmp
+
+# Temporary data files
+*.bak
+*.backup
+*.old
+*.orig
+
+# ==================== PROJECT SPECIFIC ====================
+# Test databases
+test_expense_tracker.db
+test.db
+test.sqlite
+
+# Sample data (if contains real financial data)
+sample_data/
+demo_data/
+
+# User documentation with personal info
+personal_notes.md
+my_notes.txt
+
+# Excel files from testing (may contain real data)
+/test_*.xlsx
+/test_*.xls
+/test_*.csv
+
+# ==================== BUILD / DEPLOYMENT ====================
+# Build outputs
+*.exe
+*.msi
+*.app
+*.dmg
+*.deb
+*.rpm
+
+# PyInstaller build folder
+/build/
+/dist/
+
+# Documentation builds
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# ==================== MISC ====================
+# Log files
+*.log
+logs/
+*.log.*
+
+# Lock files
+*.lock
+
+# Patch files
+*.patch
+*.diff
+
+# Archive files (may contain backups)
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# ====================  KEEP THESE ====================
+# These files SHOULD be committed:
+# - *.py (source code)
+# - requirements.txt (dependencies)
+# - README.md (documentation)
+# - LICENSE (if applicable)
+# - .gitignore (this file)
+# - config.py (configuration template, no secrets)
+# - models/ (database models)
+# - services/ (business logic)
+# - ui/ (user interface)
+# - tests/ (test code, not test data)

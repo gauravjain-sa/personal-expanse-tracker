@@ -1,0 +1,14 @@
+# Expense Tracker - Python Dependencies
+
+# UI Framework
+customtkinter>=5.2.0
+
+# Database
+SQLAlchemy>=2.0.0
+
+# Utilities
+python-dateutil>=2.8.2
+tkcalendar>=1.6.1
+
+# Export
+openpyxl>=3.1.2
