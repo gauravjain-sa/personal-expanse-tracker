@@ -31,22 +31,22 @@ def seed_default_categories() -> bool:
 
         # Default debit categories (generic high-level)
         debit_categories = [
-            {'name': 'Food & Dining', 'type': 'debit', 'icon': '🍽️'},
-            {'name': 'Transportation', 'type': 'debit', 'icon': '🚗'},
-            {'name': 'Shopping', 'type': 'debit', 'icon': '🛒'},
-            {'name': 'Bills & Utilities', 'type': 'debit', 'icon': '💡'},
-            {'name': 'Healthcare', 'type': 'debit', 'icon': '🏥'},
-            {'name': 'Entertainment', 'type': 'debit', 'icon': '🎬'},
-            {'name': 'Education', 'type': 'debit', 'icon': '🎓'},
-            {'name': 'Other Debits', 'type': 'debit', 'icon': '📝'},
+            {'name': 'Food & Dining', 'type': 'debit', 'icon': 'FD'},
+            {'name': 'Transportation', 'type': 'debit', 'icon': 'TR'},
+            {'name': 'Shopping', 'type': 'debit', 'icon': 'SH'},
+            {'name': 'Bills & Utilities', 'type': 'debit', 'icon': 'BU'},
+            {'name': 'Healthcare', 'type': 'debit', 'icon': 'HC'},
+            {'name': 'Entertainment', 'type': 'debit', 'icon': 'EN'},
+            {'name': 'Education', 'type': 'debit', 'icon': 'ED'},
+            {'name': 'Other Debits', 'type': 'debit', 'icon': 'OD'},
         ]
 
         # Default credit categories (generic high-level)
         credit_categories = [
-            {'name': 'Salary/Wages', 'type': 'credit', 'icon': '💼'},
-            {'name': 'Business Income', 'type': 'credit', 'icon': '🏢'},
-            {'name': 'Investment Returns', 'type': 'credit', 'icon': '📊'},
-            {'name': 'Other Credits', 'type': 'credit', 'icon': '💰'},
+            {'name': 'Salary/Wages', 'type': 'credit', 'icon': 'SA'},
+            {'name': 'Business Income', 'type': 'credit', 'icon': 'BI'},
+            {'name': 'Investment Returns', 'type': 'credit', 'icon': 'IN'},
+            {'name': 'Other Credits', 'type': 'credit', 'icon': 'OC'},
         ]
 
         # Combine all categories

@@ -43,7 +43,7 @@ class CategoriesFrame(BaseFrame):
         button_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
 
         add_btn = self.create_button(
-            "➕ Add Category",
+            "+ Add Category",
             command=self._add_category,
             style='primary'
         )
@@ -165,12 +165,12 @@ class CategoriesFrame(BaseFrame):
         # Edit button
         edit_btn = ctk.CTkButton(
             row,
-            text="✏️",
+            text="Edit",
             command=lambda c_id=category.get('id'): self._edit_category(c_id),
             fg_color=Config.COLORS['primary'],
             hover_color=Config.COLORS['primary_hover'],
             font=Config.get_font('body'),
-            width=40,
+            width=60,
             height=32
         )
         edit_btn.grid(row=0, column=3, padx=5, pady=12)
@@ -178,12 +178,12 @@ class CategoriesFrame(BaseFrame):
         # Delete button
         delete_btn = ctk.CTkButton(
             row,
-            text="🗑️",
+            text="Delete",
             command=lambda c_id=category.get('id'): self._delete_category(c_id),
             fg_color=Config.COLORS['error'],
             hover_color=Config.COLORS['error'],
             font=Config.get_font('body'),
-            width=40,
+            width=60,
             height=32
         )
         delete_btn.grid(row=0, column=4, padx=5, pady=12)

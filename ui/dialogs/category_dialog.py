@@ -64,8 +64,8 @@ class AddCategoryDialog(TransactionDialog):
         icon_label = self.create_label(main_container, "Icon")
         icon_label.grid(row=current_row, column=0, sticky="w", padx=10, pady=10)
 
-        self.icon_entry = self.create_entry(main_container, placeholder="emoji (e.g., 🛒)")
-        self.icon_entry.insert(0, "📁")
+        self.icon_entry = self.create_entry(main_container, placeholder="2-letter code (e.g., FD)")
+        self.icon_entry.insert(0, "IC")
         self.icon_entry.grid(row=current_row, column=1, sticky="ew", padx=10, pady=10)
         current_row += 1
 
@@ -111,7 +111,7 @@ class AddCategoryDialog(TransactionDialog):
 
         icon = self.icon_entry.get().strip()
         if not icon:
-            icon = "📁"
+            icon = "IC"
 
         description = self.description_entry.get().strip() or None
 
@@ -234,7 +234,7 @@ class EditCategoryDialog(TransactionDialog):
         if self.category.type:
             self.type_entry.insert(0, self.category.type)
 
-        self.icon_entry.insert(0, self.category.icon or "📁")
+        self.icon_entry.insert(0, self.category.icon or "IC")
 
         if self.category.description:
             self.description_entry.insert(0, self.category.description)
@@ -251,7 +251,7 @@ class EditCategoryDialog(TransactionDialog):
 
         icon = self.icon_entry.get().strip()
         if not icon:
-            icon = "📁"
+            icon = "IC"
 
         description = self.description_entry.get().strip() or None
 

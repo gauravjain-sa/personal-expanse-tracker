@@ -48,7 +48,7 @@ class DeleteConfirmationDialog(TransactionDialog):
         # Warning icon and title
         warning_label = self.create_label(
             container,
-            "⚠️ Delete Transaction",
+            "WARNING: Delete Transaction",
             font_type='heading'
         )
         warning_label.grid(row=0, column=0, pady=(0, 20))
@@ -75,7 +75,7 @@ class DeleteConfirmationDialog(TransactionDialog):
         date_text = self.transaction.date_formatted
         date_label = self.create_label(
             details_frame,
-            f"📅 {date_text}",
+            f"Date: {date_text}",
             font_type='body'
         )
         date_label.pack(anchor="w", padx=15, pady=(15, 5))
@@ -86,7 +86,7 @@ class DeleteConfirmationDialog(TransactionDialog):
         )
         desc_label = self.create_label(
             details_frame,
-            f"📝 {desc}",
+            f"Description: {desc}",
             font_type='body'
         )
         desc_label.pack(anchor="w", padx=15, pady=5)
@@ -95,7 +95,7 @@ class DeleteConfirmationDialog(TransactionDialog):
         amount_color = Config.COLORS['success'] if self.transaction.is_income() else Config.COLORS['error']
         amount_label = self.create_label(
             details_frame,
-            f"💰 {self.transaction.amount_formatted}",
+            f"Amount: {self.transaction.amount_formatted}",
             font_type='subtitle',
             text_color=amount_color
         )
@@ -104,7 +104,7 @@ class DeleteConfirmationDialog(TransactionDialog):
         # Warning text
         warning_text = self.create_label(
             container,
-            "⚠️ This action cannot be undone.",
+            "WARNING: This action cannot be undone.",
             font_type='small',
             text_color=Config.COLORS['error']
         )

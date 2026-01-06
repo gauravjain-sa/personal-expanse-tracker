@@ -132,31 +132,7 @@ class Config:
     MAX_AMOUNT: float = 999999999.99
 
     # ==================== CATEGORY ICONS ====================
-    CATEGORY_ICONS: Dict[str, str] = {
-        'Housing': '🏠',
-        'Utilities': '⚡',
-        'Groceries': '🛒',
-        'Dining': '🍔',
-        'Transportation': '🚗',
-        'Healthcare': '🏥',
-        'Insurance': '🛡️',
-        'Personal Care': '💆',
-        'Entertainment': '🎬',
-        'Shopping': '🛍️',
-        'Education': '📚',
-        'Travel': '✈️',
-        'Subscriptions': '🔄',
-        'Gifts': '🎁',
-        'Fees': '💳',
-        'Other': '📌',
-        'Salary': '💰',
-        'Business': '💼',
-        'Investments': '📈',
-        'Rental': '🏠',
-        'Freelance': '💻',
-        'Interest': '💵',
-        'Refunds': '↩️',
-    }
+    # Category icons removed - using plain text codes for cross-platform compatibility
 
     # Default category colors
     CATEGORY_COLORS: Dict[str, str] = {
@@ -214,8 +190,11 @@ class Config:
 
     @classmethod
     def get_category_icon(cls, category_name: str) -> str:
-        """Get icon for category, or default"""
-        return cls.CATEGORY_ICONS.get(category_name, '📌')
+        """Get icon for category - returns 2-letter code based on first two letters"""
+        if not category_name:
+            return "IC"
+        # Return first two letters uppercase
+        return category_name[:2].upper()
 
     @classmethod
     def get_category_color(cls, category_name: str) -> str:

@@ -43,7 +43,7 @@ class AccountsFrame(BaseFrame):
         button_frame.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
         add_btn = self.create_button(
-            "➕ Add Account",
+            "+ Add Account",
             command=self._add_account,
             style='primary'
         )
@@ -198,12 +198,12 @@ class AccountsFrame(BaseFrame):
         # Edit button
         edit_btn = ctk.CTkButton(
             button_frame,
-            text="✏️",
+            text="Edit",
             command=lambda a=account: self._edit_account(a),
             fg_color=Config.COLORS['primary'],
             hover_color=Config.COLORS['primary_hover'],
             font=Config.get_font('body'),
-            width=40,
+            width=60,
             height=32
         )
         edit_btn.pack(side="left", padx=2)
@@ -211,12 +211,12 @@ class AccountsFrame(BaseFrame):
         # Delete button
         delete_btn = ctk.CTkButton(
             button_frame,
-            text="🗑️",
+            text="Delete",
             command=lambda a=account: self._delete_account(a),
             fg_color=Config.COLORS['error'],
             hover_color=Config.COLORS['error'],
             font=Config.get_font('body'),
-            width=40,
+            width=60,
             height=32
         )
         delete_btn.pack(side="left", padx=2)

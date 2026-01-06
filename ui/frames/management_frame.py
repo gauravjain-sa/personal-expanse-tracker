@@ -297,7 +297,7 @@ class ManagementFrame(BaseFrame):
         # Icon
         icon_label = ctk.CTkLabel(
             row,
-            text=category.icon or "📁",
+            text=category.icon or "IC",
             font=Config.get_font('subtitle'),
             anchor="center"
         )

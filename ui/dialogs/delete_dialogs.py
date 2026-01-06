@@ -48,7 +48,7 @@ class DeleteAccountDialog(TransactionDialog):
         # Warning icon and title
         warning_label = self.create_label(
             container,
-            "⚠️ Delete Account",
+            "WARNING: Delete Account",
             font_type='heading'
         )
         warning_label.grid(row=0, column=0, pady=(0, 20))
@@ -71,25 +71,10 @@ class DeleteAccountDialog(TransactionDialog):
         )
         details_frame.grid(row=2, column=0, sticky="ew", pady=(0, 10))
 
-        # Account type icon
-        type_icons = {
-            'bank': '🏦',
-            'credit_card': '💳',
-            'cash': '💵',
-            'wallet': '👛',
-            'investment': '📈',
-            'person': '👤',
-            'loan': '💰',
-            'factory': '🏭',
-            'property': '🏠',
-            'other': '📋'
-        }
-        icon = type_icons.get(self.account.account_type, '💼')
-
-        # Name with icon
+        # Name
         name_label = self.create_label(
             details_frame,
-            f"{icon} {self.account.name}",
+            f"Account: {self.account.name}",
             font_type='subtitle'
         )
         name_label.pack(anchor="w", padx=15, pady=(15, 5))
@@ -116,7 +101,7 @@ class DeleteAccountDialog(TransactionDialog):
         # Warning text
         warning_text = self.create_label(
             container,
-            "⚠️ This action cannot be undone.\nAll transactions in this account will also be deleted.",
+            "WARNING: This action cannot be undone.\nAll transactions in this account will also be deleted.",
             font_type='small',
             text_color=Config.COLORS['error']
         )
@@ -198,7 +183,7 @@ class DeleteCategoryDialog(TransactionDialog):
         # Warning icon and title
         warning_label = self.create_label(
             container,
-            "⚠️ Delete Category",
+            "WARNING: Delete Category",
             font_type='heading'
         )
         warning_label.grid(row=0, column=0, pady=(0, 20))
@@ -221,10 +206,10 @@ class DeleteCategoryDialog(TransactionDialog):
         )
         details_frame.grid(row=2, column=0, sticky="ew", pady=(0, 10))
 
-        # Name with icon
+        # Name
         name_label = self.create_label(
             details_frame,
-            f"{self.category.icon} {self.category.name}",
+            f"Category: {self.category.name}",
             font_type='subtitle'
         )
         name_label.pack(anchor="w", padx=15, pady=(15, 5))
@@ -242,7 +227,7 @@ class DeleteCategoryDialog(TransactionDialog):
         # Warning text
         warning_text = self.create_label(
             container,
-            "⚠️ This action cannot be undone.\nTransactions using this category will become uncategorized.",
+            "WARNING: This action cannot be undone.\nTransactions using this category will become uncategorized.",
             font_type='small',
             text_color=Config.COLORS['error']
         )

@@ -106,17 +106,17 @@ class ExpenseTrackerApp(ctk.CTk):
         self.nav_buttons = {}
 
         nav_items = [
-            ("Dashboard", "📊", self._show_dashboard),
-            ("Transactions", "💳", self._show_transactions),
-            ("Accounts", "🏦", self._show_accounts),
-            ("Categories", "📂", self._show_categories),
-            ("Management", "⚙️", self._show_management),
+            ("Dashboard", self._show_dashboard),
+            ("Transactions", self._show_transactions),
+            ("Accounts", self._show_accounts),
+            ("Categories", self._show_categories),
+            ("Management", self._show_management),
         ]
 
-        for idx, (name, icon, command) in enumerate(nav_items, start=1):
+        for idx, (name, command) in enumerate(nav_items, start=1):
             btn = ctk.CTkButton(
                 self.sidebar,
-                text=f"{icon}  {name}",
+                text=name,
                 font=Config.get_font('body'),
                 fg_color="transparent",
                 text_color=Config.COLORS['text_secondary'],
