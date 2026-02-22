@@ -1,11 +1,13 @@
 ; Inno Setup Script for Expense Tracker
 ; Download Inno Setup from: https://jrsoftware.org/isdl.php
 
-#define MyAppName "Expense Tracker"
-#define MyAppVersion "1.0.0"
-#define MyAppPublisher "Your Company Name"
-#define MyAppURL "https://yourwebsite.com"
-#define MyAppExeName "ExpenseTracker.exe"
+; Read app metadata from config.ini (single source of truth)
+#define ConfigFile SourcePath + "\config.ini"
+#define MyAppName ReadIni(ConfigFile, "application", "name", "Expense Tracker")
+#define MyAppVersion ReadIni(ConfigFile, "application", "version", "1.0.0")
+#define MyAppPublisher ReadIni(ConfigFile, "application", "publisher", "Your Company Name")
+#define MyAppURL ReadIni(ConfigFile, "application", "url", "https://yourwebsite.com")
+#define MyAppExeName ReadIni(ConfigFile, "application", "exe_name", "ExpenseTracker.exe")
 
 [Setup]
 ; Application Info

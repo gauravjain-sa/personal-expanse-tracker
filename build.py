@@ -73,6 +73,8 @@ def build_executable():
     # Add data files (excluding test files and migration scripts)
     cmd.extend([
         "--add-data", "config.py;.",
+        "--add-data", "config.ini;.",
+        "--add-data", "theme.ini;.",
         "--add-data", "models;models",
         "--add-data", "services;services",
         "--add-data", "repositories;repositories",
@@ -100,59 +102,15 @@ def build_executable():
     print(f"  Output location: {Path('dist/ExpenseTracker').absolute()}")
 
 def create_readme():
-    """Create a README file for the distribution"""
-    readme_content = """# Expense Tracker
-
-## Installation Instructions
-
-1. Extract all files to a location of your choice (e.g., C:\\Program Files\\ExpenseTracker)
-2. Run ExpenseTracker.exe
-
-## First Run
-
-On first run, the application will:
-- Create a database in your user folder
-- Set up default categories
-- Open the main window
-
-## Data Location
-
-Your data is stored in:
-%APPDATA%\\Expense Tracker\\expense_tracker.db
-
-## Backup Your Data
-
-To backup your financial data:
-1. Close the application
-2. Copy the file: %APPDATA%\\Expense Tracker\\expense_tracker.db
-3. Store it safely
-
-To restore:
-1. Close the application
-2. Replace the database file with your backup
-
-## System Requirements
-
-- Windows 10 or later
-- 100 MB free disk space
-- 2 GB RAM (minimum)
-
-## Support
-
-For issues or questions, please visit:
-https://github.com/yourusername/expanse-tracker/issues
-
-## Version
-
-Version 1.0.0
-Built with Python and CustomTkinter
-"""
-
+    """Copy README from resources to the distribution folder"""
+    readme_src = Path("resources/README_DIST.txt")
     dist_path = Path("dist/ExpenseTracker")
-    if dist_path.exists():
-        with open(dist_path / "README.txt", "w") as f:
-            f.write(readme_content)
-        print("\n[OK] Created README.txt in distribution folder")
+
+    if dist_path.exists() and readme_src.exists():
+        shutil.copy2(str(readme_src), str(dist_path / "README.txt"))
+        print("\n[OK] Copied README.txt to distribution folder")
+    elif not readme_src.exists():
+        print("\n[WARN] resources/README_DIST.txt not found, skipping README")
 
 def main():
     """Main build process"""

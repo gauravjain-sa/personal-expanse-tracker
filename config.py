@@ -1,23 +1,82 @@
 """
 Configuration Module
 Centralized configuration for the application - NO HARDCODING
+Reads application settings from config.ini and UI/theme settings from theme.ini.
+This file acts as a wrapper — all consuming code uses the Config class unchanged.
 """
 import os
+import configparser
 from pathlib import Path
 from typing import Dict, Tuple
+
+_CONFIG_DIR = Path(__file__).parent
+
+
+def _load_ini(filename):
+    """Load an .ini file using RawConfigParser (no interpolation issues with % in date formats)"""
+    parser = configparser.RawConfigParser()
+    parser.optionxform = str  # Preserve key case for category names etc.
+    parser.read(str(_CONFIG_DIR / filename), encoding='utf-8')
+    return parser
+
+
+_app = _load_ini('config.ini')
+_theme = _load_ini('theme.ini')
+
+
+# --- helpers for _app (application config) ---
+
+def _get(section, key, fallback=None):
+    return _app.get(section, key, fallback=fallback)
+
+
+def _get_int(section, key, fallback=0):
+    return _app.getint(section, key, fallback=fallback)
+
+
+def _get_float(section, key, fallback=0.0):
+    return _app.getfloat(section, key, fallback=fallback)
+
+
+def _get_bool(section, key, fallback=False):
+    return _app.getboolean(section, key, fallback=fallback)
+
+
+def _get_list(section, key, fallback=None):
+    val = _app.get(section, key, fallback=None)
+    if val is None:
+        return fallback or []
+    return [item.strip() for item in val.split(',')]
+
+
+# --- helpers for _theme (UI/theme config) ---
+
+def _tget(section, key, fallback=None):
+    return _theme.get(section, key, fallback=fallback)
+
+
+def _tget_int(section, key, fallback=0):
+    return _theme.getint(section, key, fallback=fallback)
+
+
+def _tget_section_dict(section, fallback=None):
+    if _theme.has_section(section):
+        return dict(_theme.items(section))
+    return fallback or {}
+
 
 class Config:
     """Application configuration - all settings in one place"""
 
     # ==================== APPLICATION INFO ====================
-    APP_NAME: str = "Expense Tracker"
-    VERSION: str = "1.0.0"
-    AUTHOR: str = "Your Name"
+    APP_NAME: str = _get('application', 'name', 'Expense Tracker')
+    VERSION: str = _get('application', 'version', '1.0.0')
+    AUTHOR: str = _get('application', 'author', 'Your Name')
 
     # ==================== PATHS ====================
-    BASE_DIR: Path = Path(__file__).parent
+    BASE_DIR: Path = _CONFIG_DIR
     DATA_DIR: Path = Path(os.getenv('APPDATA', '.')) / APP_NAME
-    DB_DIR: Path = DATA_DIR  # Alias for backward compatibility
+    DB_DIR: Path = DATA_DIR
     DB_PATH: Path = DATA_DIR / "expense_tracker.db"
     BACKUP_DIR: Path = DATA_DIR / "backups"
     EXPORT_DIR: Path = DATA_DIR / "exports"
@@ -25,44 +84,44 @@ class Config:
 
     # ==================== DATABASE ====================
     DATABASE_URL: str = f"sqlite:///{DB_PATH}"
-    DB_ECHO: bool = False  # Set to True for SQL debugging
-    DEBUG_MODE: bool = False  # Enable debug mode for development
+    DB_ECHO: bool = _get_bool('database', 'echo', False)
+    DEBUG_MODE: bool = _get_bool('database', 'debug_mode', False)
 
-    # ==================== UI SETTINGS ====================
+    # ==================== UI SETTINGS (from theme.ini) ====================
     # Window
-    WINDOW_WIDTH: int = 1200
-    WINDOW_HEIGHT: int = 700
-    MIN_WIDTH: int = 1000
-    MIN_HEIGHT: int = 600
+    WINDOW_WIDTH: int = _tget_int('window', 'width', 1200)
+    WINDOW_HEIGHT: int = _tget_int('window', 'height', 700)
+    MIN_WIDTH: int = _tget_int('window', 'min_width', 1000)
+    MIN_HEIGHT: int = _tget_int('window', 'min_height', 600)
 
     # Sidebar
-    SIDEBAR_WIDTH: int = 200
+    SIDEBAR_WIDTH: int = _tget_int('window', 'sidebar_width', 200)
 
     # Theme
-    APPEARANCE_MODE: str = "dark"  # "dark" or "light"
-    COLOR_THEME: str = "blue"  # "blue", "green", "dark-blue"
+    APPEARANCE_MODE: str = _tget('theme', 'appearance_mode', 'dark')
+    COLOR_THEME: str = _tget('theme', 'color_theme', 'blue')
 
-    # ==================== COLORS ====================
+    # ==================== COLORS (from theme.ini) ====================
     # Primary colors
-    PRIMARY: str = "#1f538d"
-    SECONDARY: str = "#14375e"
+    PRIMARY: str = _tget('colors', 'primary', '#1f538d')
+    SECONDARY: str = _tget('colors', 'secondary', '#14375e')
 
     # Status colors
-    SUCCESS: str = "#2fa572"    # Green (credits)
-    DANGER: str = "#e74c3c"     # Red (debits)
-    WARNING: str = "#f39c12"    # Orange
-    INFO: str = "#3498db"       # Blue
+    SUCCESS: str = _tget('colors', 'success', '#2fa572')
+    DANGER: str = _tget('colors', 'danger', '#e74c3c')
+    WARNING: str = _tget('colors', 'warning', '#f39c12')
+    INFO: str = _tget('colors', 'info', '#3498db')
 
     # UI colors
-    BG_DARK: str = "#1a1a1a"
-    BG_LIGHT: str = "#f5f5f5"
-    CARD_DARK: str = "#2b2b2b"
-    CARD_LIGHT: str = "#ffffff"
-    TEXT_DARK: str = "#ffffff"
-    TEXT_LIGHT: str = "#000000"
+    BG_DARK: str = _tget('colors', 'bg_dark', '#1a1a1a')
+    BG_LIGHT: str = _tget('colors', 'bg_light', '#f5f5f5')
+    CARD_DARK: str = _tget('colors', 'card_dark', '#2b2b2b')
+    CARD_LIGHT: str = _tget('colors', 'card_light', '#ffffff')
+    TEXT_DARK: str = _tget('colors', 'text_dark', '#ffffff')
+    TEXT_LIGHT: str = _tget('colors', 'text_light', '#000000')
 
     # Color dictionary for easy access
-    COLORS: Dict[str, str] = {
+    COLORS: Dict[str, str] = _tget_section_dict('color_palette', {
         'primary': "#1f538d",
         'primary_hover': "#16406f",
         'secondary': "#14375e",
@@ -73,69 +132,64 @@ class Config:
         'info': "#3498db",
         'background': "#1a1a1a",
         'surface': "#2b2b2b",
-        'card': "#2b2b2b",  # Alias for surface
+        'card': "#2b2b2b",
         'border': "#404040",
-        'text': "#ffffff",  # Alias for text_primary
+        'text': "#ffffff",
         'text_primary': "#ffffff",
         'text_secondary': "#b0b0b0"
-    }
+    })
 
-    # ==================== FONTS ====================
-    FONT_FAMILY: str = "Segoe UI"
+    # ==================== FONTS (from theme.ini) ====================
+    FONT_FAMILY: str = _tget('fonts', 'family', 'Segoe UI')
 
     FONT_SIZES: Dict[str, int] = {
-        'title': 24,
-        'heading': 18,
-        'subheading': 16,
-        'body': 14,
-        'small': 12,
-        'tiny': 10
+        k: int(v) for k, v in _tget_section_dict('font_sizes', {
+            'title': '24', 'heading': '18', 'subheading': '16',
+            'body': '14', 'small': '12', 'tiny': '10'
+        }).items()
     }
 
-    FONT_WEIGHTS: Dict[str, str] = {
+    FONT_WEIGHTS: Dict[str, str] = _tget_section_dict('font_weights', {
         'normal': 'normal',
         'bold': 'bold'
-    }
+    })
 
-    # ==================== BUSINESS RULES ====================
+    # ==================== BUSINESS RULES (from config.ini) ====================
     # Currencies
-    CURRENCIES: list = ["INR", "USD", "EUR", "GBP", "JPY", "CAD", "AUD"]
-    DEFAULT_CURRENCY: str = "INR"
-    CURRENCY_CODE: str = "INR"  # Alias for backward compatibility
-
-    # Account types - removed hardcoding, users manage these from UI
+    CURRENCIES: list = _get_list('currency', 'currencies',
+                                 ['INR', 'USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD'])
+    DEFAULT_CURRENCY: str = _get('currency', 'default', 'INR')
+    CURRENCY_CODE: str = _get('currency', 'code', 'INR')
 
     # Transaction types
-    TRANSACTION_TYPES: list = ["Credit", "Debit", "Transfer"]
+    TRANSACTION_TYPES: list = _get_list('transactions', 'types',
+                                        ['Credit', 'Debit', 'Transfer'])
 
     # Transaction directions
-    DIRECTIONS: list = ["Debit", "Credit"]
+    DIRECTIONS: list = _get_list('transactions', 'directions', ['Debit', 'Credit'])
 
-    # Date formats (Indian format)
-    DATE_FORMAT: str = "%d-%m-%Y"  # DD-MM-YYYY
-    DISPLAY_DATE_FORMAT: str = "%d %b %Y"  # 03 Jan 2026
-    DATETIME_FORMAT: str = "%d-%m-%Y %H:%M:%S"
+    # Date formats
+    DATE_FORMAT: str = _get('date_formats', 'date', '%d-%m-%Y')
+    DISPLAY_DATE_FORMAT: str = _get('date_formats', 'display_date', '%d %b %Y')
+    DATETIME_FORMAT: str = _get('date_formats', 'datetime', '%d-%m-%Y %H:%M:%S')
 
-    # Currency format (Indian Rupee)
-    CURRENCY_SYMBOL: str = "₹"
-    DECIMAL_PLACES: int = 2
+    # Currency format
+    CURRENCY_SYMBOL: str = _get('currency', 'symbol', '₹')
+    DECIMAL_PLACES: int = _get_int('currency', 'decimal_places', 2)
 
     # Pagination
-    DEFAULT_PAGE_SIZE: int = 50
-    MAX_PAGE_SIZE: int = 100
+    DEFAULT_PAGE_SIZE: int = _get_int('pagination', 'default_page_size', 50)
+    MAX_PAGE_SIZE: int = _get_int('pagination', 'max_page_size', 100)
 
     # Validation
-    MAX_DESCRIPTION_LENGTH: int = 255
-    MAX_NOTES_LENGTH: int = 1000
-    MAX_NAME_LENGTH: int = 100
-    MIN_AMOUNT: float = 0.01
-    MAX_AMOUNT: float = 999999999.99
+    MAX_DESCRIPTION_LENGTH: int = _get_int('validation', 'max_description_length', 255)
+    MAX_NOTES_LENGTH: int = _get_int('validation', 'max_notes_length', 1000)
+    MAX_NAME_LENGTH: int = _get_int('validation', 'max_name_length', 100)
+    MIN_AMOUNT: float = _get_float('validation', 'min_amount', 0.01)
+    MAX_AMOUNT: float = _get_float('validation', 'max_amount', 999999999.99)
 
-    # ==================== CATEGORY ICONS ====================
-    # Category icons removed - using plain text codes for cross-platform compatibility
-
-    # Default category colors
-    CATEGORY_COLORS: Dict[str, str] = {
+    # ==================== CATEGORY COLORS (from theme.ini) ====================
+    CATEGORY_COLORS: Dict[str, str] = _tget_section_dict('category_colors', {
         'Housing': '#FF6B6B',
         'Utilities': '#4ECDC4',
         'Groceries': '#45B7D1',
@@ -159,7 +213,7 @@ class Config:
         'Freelance': '#F39C12',
         'Interest': '#27AE60',
         'Refunds': '#16A085',
-    }
+    })
 
     # ==================== METHODS ====================
     @classmethod
@@ -193,7 +247,6 @@ class Config:
         """Get icon for category - returns 2-letter code based on first two letters"""
         if not category_name:
             return "IC"
-        # Return first two letters uppercase
         return category_name[:2].upper()
 
     @classmethod
