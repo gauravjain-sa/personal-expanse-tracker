@@ -25,7 +25,10 @@ DisableProgramGroupPage=yes
 ; Output
 OutputDir=installer_output
 OutputBaseFilename=ExpenseTracker_Setup_v{#MyAppVersion}
+; Custom icon - only included if the file exists (place .ico at resources\icon.ico)
+#ifexist "resources\icon.ico"
 SetupIconFile=resources\icon.ico
+#endif
 Compression=lzma2/max
 SolidCompression=yes
 
@@ -90,7 +93,6 @@ end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
-  ResultCode: Integer;
   DataPath: String;
 begin
   if CurUninstallStep = usPostUninstall then

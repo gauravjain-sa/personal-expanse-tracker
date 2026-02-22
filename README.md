@@ -9,19 +9,22 @@ A lightweight desktop application for tracking personal expenses, income, and ma
 - **Accounts**: Manage multiple accounts (bank, credit card, cash, etc.)
 - **Categories**: Organize transactions with customizable categories
 - **Reports**: View spending patterns and financial insights
+- **Export**: Export data to Excel/CSV
 
 ## Technology Stack
 
-- **Python 3.11+**
+- **Python 3.10+**
 - **CustomTkinter**: Modern UI framework for desktop applications
 - **SQLAlchemy**: Database ORM
 - **SQLite**: Lightweight embedded database
+- **PyInstaller**: Build standalone executable
+- **Inno Setup**: Windows installer creation
 
 ## Installation
 
 ### Prerequisites
 
-- Python 3.11 or higher
+- Python 3.10 or higher
 - pip (Python package manager)
 
 ### Steps
@@ -45,6 +48,8 @@ expanse-tracker/
 ├── config.py                 # Application configuration
 ├── main.py                   # Application entry point
 ├── requirements.txt          # Python dependencies
+├── README.md                 # This file
+├── start.bat                 # Quick launcher (Windows)
 │
 ├── models/                   # Database models
 │   ├── base.py
@@ -55,8 +60,8 @@ expanse-tracker/
 │
 ├── database/                 # Database management
 │   ├── connection.py         # Database connection
-│   ├── init_db.py           # Database initialization
-│   └── seed_data.py         # Default data seeding
+│   ├── init_db.py            # Database initialization
+│   └── seed_data.py          # Default data seeding
 │
 ├── repositories/             # Data access layer
 │   ├── base_repository.py
@@ -69,19 +74,25 @@ expanse-tracker/
 │   ├── account_service.py
 │   ├── category_service.py
 │   ├── transaction_service.py
-│   └── report_service.py
+│   ├── report_service.py
+│   └── export_service.py
 │
-└── ui/                       # User interface
-    ├── app.py               # Main application window
-    ├── components/          # Reusable UI components
-    │   ├── base_frame.py
-    │   ├── card_widget.py
-    │   └── stat_card.py
-    └── frames/              # Application screens
-        ├── dashboard_frame.py
-        ├── transactions_frame.py
-        ├── accounts_frame.py
-        └── categories_frame.py
+├── ui/                       # User interface
+│   ├── app.py                # Main application window
+│   ├── components/           # Reusable UI components
+│   ├── dialogs/              # Dialog windows
+│   └── frames/               # Application screens
+│
+├── resources/                # Application resources (icon, etc.)
+│
+├── documents/                # Project documentation
+│   ├── BUILD_QUICKSTART.md   # Quick build guide
+│   ├── DEPLOYMENT_GUIDE.md   # Full deployment guide
+│   └── ...                   # Design docs, specs, etc.
+│
+├── build.py                  # Build script (PyInstaller)
+├── build_all.bat             # Automated build pipeline
+└── installer.iss             # Inno Setup installer script
 ```
 
 ## Architecture
@@ -104,7 +115,7 @@ The application follows a layered architecture:
 ## Database
 
 The application uses SQLite for data storage. The database file is created automatically at:
-- `data/expense_tracker.db`
+- `%APPDATA%\Expense Tracker\expense_tracker.db`
 
 ### Default Data
 
@@ -123,31 +134,36 @@ On first run, the application seeds the database with:
 
 ### Adding Transactions
 
-*(Coming soon - dialog implementation pending)*
+1. Navigate to "Transactions" section
+2. Click "Add Transaction"
+3. Fill in amount, category, account, date, and description
+4. Choose Credit or Debit
 
 ### Managing Accounts
 
 1. Navigate to "Accounts" section
 2. View all your accounts with current balances
-3. Click "Add Account" to create new accounts *(dialog pending)*
+3. Click "Add Account" to create new accounts
 
 ### Managing Categories
 
 1. Navigate to "Categories" section
 2. View expense and income categories
-3. Click "Add Category" to create custom categories *(dialog pending)*
+3. Click "Add Category" to create custom categories
 
-## Future Enhancements
+## Building & Distribution
 
-- Transaction add/edit/delete dialogs
-- Advanced filtering and search
-- Visual charts and graphs
-- Budget tracking
-- Data export (Excel, CSV, PDF)
-- Recurring transactions
-- Receipt attachments
-- Multi-currency support
-- Web version (migration path ready)
+For building the standalone executable and installer, see:
+- **Quick guide**: `documents/BUILD_QUICKSTART.md`
+- **Full guide**: `documents/DEPLOYMENT_GUIDE.md`
+
+### Quick Build
+
+```bash
+build_all.bat
+```
+
+This builds the executable, lets you test it, and creates the installer.
 
 ## Development
 
@@ -155,21 +171,10 @@ On first run, the application seeds the database with:
 
 The modular architecture makes it easy to extend:
 
-1. **New Model**: Add to `models/` and create migration
+1. **New Model**: Add to `models/`
 2. **New Repository**: Extend `BaseRepository` in `repositories/`
 3. **New Service**: Add business logic in `services/`
 4. **New UI Frame**: Extend `BaseFrame` in `ui/frames/`
-
-### Testing
-
-```bash
-# Run database initialization test
-python database/init_db.py
-
-# Run individual modules
-python -m models.account
-python -m services.transaction_service
-```
 
 ## License
 
@@ -177,4 +182,4 @@ This is a personal project for expense tracking.
 
 ## Contact
 
-For issues or questions, please refer to the project documentation.
+For issues or questions, please refer to the project documentation in `documents/`.

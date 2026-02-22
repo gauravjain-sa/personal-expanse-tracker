@@ -10,7 +10,6 @@ This guide explains how to package and distribute the Expense Tracker applicatio
 2. **All dependencies** installed:
    ```bash
    pip install -r requirements.txt
-   pip install pyinstaller
    ```
 
 3. **Inno Setup 6** (for creating the installer):
@@ -74,10 +73,10 @@ Or simply right-click on `installer.iss` and select "Compile".
 
 ### Distributing the Installer
 
-The installer (`ExpenseTracker_Setup_v1.0.0.exe`) is a single file that:
+The installer (`ExpenseTracker_Setup_v1.0.0.exe`) is a **100% self-contained** single file that:
 - Can be distributed via email, website, USB drive, etc.
-- Size: Approximately 50-80 MB (includes Python runtime + dependencies)
-- Requires no dependencies on the target machine
+- Size: Approximately 50-80 MB (includes Python runtime + all dependencies)
+- Requires **nothing else** on the target machine (no Python, no pip, no downloads)
 - Works on Windows 10 and later
 
 ### Installation Process for End Users
@@ -301,12 +300,17 @@ For developers building the application:
 
 ## Files Overview
 
-### Build System Files
+### Build System Files (in project root)
 
-- `build.py` - Main build script (creates executable)
+- `build.py` - Main build script (creates executable via PyInstaller)
+- `build_all.bat` - Automated full pipeline (build + test + installer)
 - `installer.iss` - Inno Setup script (creates installer)
-- `resources/icon.ico` - Application icon
-- `DEPLOYMENT_GUIDE.md` - This file
+- `resources/icon.ico` - Application icon (optional, see note below)
+
+### Documentation Files (in documents/ folder)
+
+- `BUILD_QUICKSTART.md` - Quick start guide for building
+- `DEPLOYMENT_GUIDE.md` - This file (comprehensive deployment guide)
 
 ### Output Files
 
@@ -321,6 +325,4 @@ For developers building the application:
 ## Contact
 
 For questions about the deployment process:
-- Email: support@yourcompany.com
 - GitHub: https://github.com/yourusername/expanse-tracker
-- Documentation: https://docs.yourapp.com

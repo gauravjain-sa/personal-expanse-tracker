@@ -9,7 +9,6 @@
 *.db-journal
 *.db-wal
 *.db-shm
-expense_tracker.db
 
 # ==================== APPLICATION DATA ====================
 # User data directories
@@ -30,29 +29,12 @@ __pycache__/
 *$py.class
 *.so
 
-# C extensions
-*.so
-
 # Distribution / packaging
 .Python
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
 *.egg
-MANIFEST
 
 # PyInstaller
 *.manifest
@@ -69,7 +51,6 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
-nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
@@ -80,76 +61,22 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# PEP 582
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.env.local
-.env.*.local
+# Virtual environments
 .venv
 env/
 venv/
 ENV/
-env.bak/
-venv.bak/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+# pyenv
+.python-version
 
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
+# PEP 582
+__pypackages__/
 
 # mypy
 .mypy_cache/
 .dmypy.json
 dmypy.json
-
-# Pyre type checker
-.pyre/
 
 # ==================== IDE / EDITORS ====================
 # Visual Studio Code
@@ -165,12 +92,9 @@ dmypy.json
 *.sublime-project
 *.sublime-workspace
 
-# Vim
+# Vim / Emacs
 *.swp
 *.swo
-*~
-
-# Emacs
 *~
 \#*\#
 .\#*
@@ -178,49 +102,159 @@ dmypy.json
 # ==================== OPERATING SYSTEM ====================
 # macOS
 .DS_Store
-.AppleDouble
-.LSOverride
 ._*
-.Spotlight-V100
-.Trashes
 
 # Windows
 Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-*.stackdump
 [Dd]esktop.ini
 $RECYCLE.BIN/
 *.lnk
 
 # Linux
-*~
 .directory
 .Trash-*
 
 # ==================== SECURITY ====================
 # CRITICAL: Never commit these files
-secrets.txt
-secrets.json
-credentials.json
-credentials.txt
+
+# Environment files
+.env
+.env.*
+.envrc
+
+# Secret / credential files
+secrets.*
+credentials.*
+*.secret
+*.token
+.secrets/
+.vault-token
+
+# Config files with secrets (project structure configs like pyproject.toml, setup.cfg are kept)
+*secret*.ini
+*secret*.conf
+*secret*.cfg
+*secret*.yaml
+*secret*.yml
+*secret*.toml
+*credential*.ini
+*credential*.conf
+*credential*.yaml
+*credential*.yml
+*password*.ini
+*password*.conf
+*password*.yaml
+*password*.yml
+config.local.*
+*.local.yaml
+*.local.yml
+*.local.toml
+*.local.ini
+*.local.conf
+*.production.yaml
+*.production.yml
+*.production.toml
+
+# PEM / OpenSSL keys & certificates
 *.pem
 *.key
 *.cert
+*.crt
+*.cer
+*.csr
+*.der
+
+# PKCS formats
 *.p12
-.secrets/
+*.pfx
+*.p7b
+*.p8
+
+# Java keystores
+*.jks
+*.jceks
+*.keystore
+*.truststore
+
+# macOS keychain
+*.keychain
+*.keychain-db
+
+# SSH keys
+.ssh/
 id_rsa
 id_rsa.pub
+id_ed25519
+id_ed25519.pub
+id_ecdsa
+id_ecdsa.pub
+id_dsa
+id_dsa.pub
+known_hosts
+authorized_keys
 *.ppk
 
-# API keys and tokens
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-*.env
+# GPG keys
+*.gpg
+*.asc
+.gnupg/
+
+# OAuth / JWT
+*.jwk
+*.jwks
+
+# Password / auth files
+*.htpasswd
+*.htaccess
+*.netrc
+*.pgpass
+*.my.cnf
+
+# Password manager files
+*.kdbx
+*.kdb
+
+# Crypto wallets
+wallet.dat
+*.wallet
+
+# Cloud credentials
+.aws/
+.gcloud/
+.azure/
+*.boto
+.s3cfg
+
+# Tool auth (may contain registry tokens)
+.npmrc
+.pypirc
+.git-credentials
+.gitcredentials
+.dockercfg
+
+# History files (may contain typed passwords)
+.*_history
+.python_history
+.node_repl_history
+
+# VPN / remote access
+*.ovpn
+*.rdp
+*.vnc
+
+# Encrypted files
+*.enc
+*.encrypted
+
+# Terraform / IaC
+*.tfvars
+*.tfstate
+*.tfstate.backup
+
+# Database dumps
+*.sql
+*.dump
+*.bson
 
 # ==================== TEMPORARY FILES ====================
 # Temporary Python files
@@ -229,12 +263,6 @@ temp.py
 test_*.py
 debug_*.py
 *.tmp
-
-# Windows reserved names
-nul
-con
-prn
-aux
 
 # Temporary data files
 *.bak
@@ -248,15 +276,15 @@ test_expense_tracker.db
 test.db
 test.sqlite
 
-# Sample data (if contains real financial data)
+# Sample / demo data
 sample_data/
 demo_data/
 
-# User documentation with personal info
+# Personal notes
 personal_notes.md
 my_notes.txt
 
-# Excel files from testing (may contain real data)
+# Test data files
 /test_*.xlsx
 /test_*.xls
 /test_*.csv
@@ -265,28 +293,18 @@ my_notes.txt
 # Build outputs
 *.exe
 *.msi
-*.app
-*.dmg
-*.deb
-*.rpm
 
 # PyInstaller build folder
 /build/
 /dist/
 
-# Documentation builds
-docs/_build/
-docs/_static/
-docs/_templates/
+# Installer output
+installer_output/
 
 # ==================== MISC ====================
 # Log files
 *.log
-logs/
 *.log.*
-
-# Lock files
-*.lock
 
 # Patch files
 *.patch
@@ -304,10 +322,18 @@ logs/
 # - *.py (source code)
 # - requirements.txt (dependencies)
 # - README.md (documentation)
+# - CLAUDE.md (Claude AI rules)
+# - .claude/settings.json (Claude deny rules)
+# - .cursorignore (Cursor AI file exclusions)
+# - .cursor/rules/ (Cursor AI rules)
 # - LICENSE (if applicable)
 # - .gitignore (this file)
-# - config.py (configuration template, no secrets)
+# - config.py (configuration)
 # - models/ (database models)
 # - services/ (business logic)
+# - repositories/ (data access)
 # - ui/ (user interface)
-# - tests/ (test code, not test data)
+# - documents/ (project documentation)
+# - resources/ (app resources)
+# - *.bat (build/launch scripts)
+# - *.iss (installer script)

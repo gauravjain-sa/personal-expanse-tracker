@@ -1,0 +1,77 @@
+---
+alwaysApply: true
+---
+# Security Rules - Expense Tracker
+
+## CRITICAL: Never include sensitive data in AI context
+
+### Prohibited Content
+- **API keys**, tokens, or secrets of any kind
+- **Database credentials** or connection strings with passwords
+- **User credentials** (usernames, passwords, PINs)
+- **Financial data** (real account numbers, transaction amounts, bank details)
+- **Personal information** (names, addresses, phone numbers, email addresses)
+- **Private keys**, certificates, or encryption keys
+- **Environment variables** containing secrets (`.env` files)
+
+### Code Rules
+- Never hardcode credentials, API keys, or secrets in source code
+- Use environment variables or secure config files for sensitive values
+- All configuration is centralized in [config.py](mdc:config.py) — no secrets there
+- Database is stored in `%APPDATA%\Expense Tracker\` — never commit `.db` files
+- Never log or print sensitive data (passwords, keys, financial details)
+
+### File Rules — Never read or reference files matching:
+
+**Database & Data:**
+- `*.db`, `*.sqlite`, `*.sqlite3` — user financial data
+- `*.sql`, `*.dump`, `*.bson` — database dumps
+
+**Environment & Secrets:**
+- `.env`, `.env.*`, `.envrc` — environment secrets
+- `secrets.*`, `credentials.*`, `*.secret`, `*.token` — credential files
+- `.vault-token` — HashiCorp Vault tokens
+
+**Config files containing secrets (project structure configs like `pyproject.toml`, `setup.cfg` are OK to read):**
+- `*secret*.yaml`, `*secret*.yml`, `*secret*.ini`, `*secret*.conf` — secret config files
+- `*credential*.yaml`, `*credential*.yml`, `*password*.yaml` — credential config files
+- `config.local.*`, `*.local.yaml`, `*.production.yaml` — environment-specific configs with secrets
+
+**Private keys & certificates:**
+- `*.pem`, `*.key`, `*.cert`, `*.crt`, `*.cer`, `*.csr`, `*.der` — PEM/OpenSSL
+- `*.p12`, `*.pfx`, `*.p7b`, `*.p8` — PKCS formats
+- `*.jks`, `*.jceks`, `*.keystore`, `*.truststore` — Java keystores
+- `*.keychain`, `*.keychain-db` — macOS keychains
+- `id_rsa`, `id_ed25519`, `id_ecdsa`, `id_dsa`, `*.ppk` — SSH keys
+- `*.gpg`, `*.asc` — GPG keys
+- `*.jwk`, `*.jwks` — OAuth/JWT keys
+
+**Auth & password files:**
+- `*.htpasswd`, `*.netrc`, `*.pgpass`, `.my.cnf` — password files
+- `*.kdbx`, `*.kdb` — password manager databases
+- `wallet.dat`, `*.wallet` — crypto wallets
+
+**Cloud credentials:**
+- `.aws/`, `.gcloud/`, `.azure/` — cloud provider configs
+- `.npmrc`, `.pypirc`, `.git-credentials`, `.dockercfg` — tool auth
+
+**History files (may contain typed passwords):**
+- `.*_history`, `.bash_history`, `.python_history`
+
+**VPN / Remote access:**
+- `*.ovpn`, `*.rdp`, `*.vnc`
+
+**Encrypted files:**
+- `*.enc`, `*.encrypted`
+
+**Terraform / IaC:**
+- `*.tfvars`, `*.tfstate` — may contain secrets
+
+### Other Rules
+- Never suggest storing secrets in source code or config files
+- Always use `.gitignore` patterns for sensitive files (see [.gitignore](mdc:.gitignore))
+
+### When generating code
+- Use placeholder values like `"your-api-key-here"` or `os.getenv("API_KEY")` for any secrets
+- Never generate real-looking API keys, tokens, or credentials
+- Always recommend environment variables for any external service credentials

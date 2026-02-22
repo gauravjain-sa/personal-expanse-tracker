@@ -1,0 +1,28 @@
+---
+alwaysApply: true
+---
+# Project Rules - Expense Tracker
+
+## Architecture
+This is a Python desktop application using CustomTkinter with a layered architecture:
+- **Entry point**: [main.py](mdc:main.py)
+- **Configuration**: [config.py](mdc:config.py) — all settings centralized here
+- **Models**: `models/` — SQLAlchemy ORM models
+- **Repositories**: `repositories/` — data access layer
+- **Services**: `services/` — business logic
+- **UI**: `ui/` — CustomTkinter interface (frames, dialogs, components)
+- **Database**: `database/` — connection, initialization, seeding
+
+## Key Principles
+- Keep changes minimal and simple
+- Do not over-engineer
+- Propose changes with minimal impact and no regression
+- Follow existing folder structure and naming conventions
+- Changes should be easy to maintain and debug
+- All configuration in `config.py` — no hardcoding
+
+## Build System
+- [build.py](mdc:build.py) — PyInstaller build script
+- [build_all.bat](mdc:build_all.bat) — full build pipeline
+- [installer.iss](mdc:installer.iss) — Inno Setup installer script
+- Build docs: `documents/BUILD_QUICKSTART.md` and `documents/DEPLOYMENT_GUIDE.md`

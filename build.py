@@ -84,9 +84,8 @@ def build_executable():
         "--add-data", "database/seed_data.py;database",
     ])
 
-    # Exclude test files and migration scripts
+    # Exclude test frameworks from the build
     cmd.extend([
-        "--exclude-module", "test_excel_workflow",
         "--exclude-module", "pytest",
         "--exclude-module", "unittest",
     ])
@@ -97,7 +96,7 @@ def build_executable():
     print(f"Running: {' '.join(cmd)}")
     subprocess.check_call(cmd)
 
-    print("\n✓ Executable built successfully!")
+    print("\n[OK] Executable built successfully!")
     print(f"  Output location: {Path('dist/ExpenseTracker').absolute()}")
 
 def create_readme():
@@ -119,13 +118,13 @@ On first run, the application will:
 ## Data Location
 
 Your data is stored in:
-%APPDATA%\\ExpenseTracker\\expanse_tracker.db
+%APPDATA%\\Expense Tracker\\expense_tracker.db
 
 ## Backup Your Data
 
 To backup your financial data:
 1. Close the application
-2. Copy the file: %APPDATA%\\ExpenseTracker\\expanse_tracker.db
+2. Copy the file: %APPDATA%\\Expense Tracker\\expense_tracker.db
 3. Store it safely
 
 To restore:
@@ -153,7 +152,7 @@ Built with Python and CustomTkinter
     if dist_path.exists():
         with open(dist_path / "README.txt", "w") as f:
             f.write(readme_content)
-        print("\n✓ Created README.txt in distribution folder")
+        print("\n[OK] Created README.txt in distribution folder")
 
 def main():
     """Main build process"""
@@ -184,10 +183,10 @@ def main():
         print("3. Distribute the installer to users")
 
     except subprocess.CalledProcessError as e:
-        print(f"\n✗ Build failed with error: {e}")
+        print(f"\n[FAILED] Build failed with error: {e}")
         sys.exit(1)
     except Exception as e:
-        print(f"\n✗ Unexpected error: {e}")
+        print(f"\n[FAILED] Unexpected error: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":

@@ -1,0 +1,323 @@
+# Cursorignore - Files excluded from AI indexing and context
+# This prevents sensitive files from being sent to AI models
+
+# ==================== DATABASE FILES ====================
+# CRITICAL: Contains user financial data
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Database dumps / exports
+*.sql
+*.dump
+*.bson
+
+# ==================== ENVIRONMENT / SECRETS ====================
+# CRITICAL: Never send credentials to AI
+
+# Environment files (all variations)
+.env
+.env.*
+.envrc
+*.env
+*-env
+env.*
+environment.*
+.environment
+*.environment
+
+# Secret / credential files
+secrets.*
+credentials.*
+.secrets/
+*.secret
+*.secrets
+*.token
+*.tokens
+.vault-token
+vault.*
+.vault/
+*.apikey
+*.api-key
+api-keys.*
+api_keys.*
+
+# ==================== CONFIG FILES WITH SECRETS ====================
+# Only block config files likely to contain secrets (not project structure configs)
+# Project configs like pyproject.toml, setup.cfg, docker-compose.yml remain available
+*secret*.ini
+*secret*.conf
+*secret*.cfg
+*secret*.yaml
+*secret*.yml
+*secret*.toml
+*credential*.ini
+*credential*.conf
+*credential*.yaml
+*credential*.yml
+*password*.ini
+*password*.conf
+*password*.yaml
+*password*.yml
+config.local.*
+*.local.yaml
+*.local.yml
+*.local.toml
+*.local.ini
+*.local.conf
+*.production.yaml
+*.production.yml
+*.production.toml
+
+# ==================== PRIVATE KEYS / CERTIFICATES ====================
+
+# PEM / OpenSSL
+*.pem
+*.key
+*.cert
+*.crt
+*.cer
+*.csr
+*.der
+
+# PKCS formats
+*.p12
+*.pfx
+*.p7b
+*.p8
+
+# Java keystores
+*.jks
+*.jceks
+*.keystore
+*.truststore
+
+# macOS keychain
+*.keychain
+*.keychain-db
+
+# SSH keys
+.ssh/
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+id_ecdsa
+id_ecdsa.pub
+id_dsa
+id_dsa.pub
+known_hosts
+authorized_keys
+*.ppk
+
+# GPG keys
+*.gpg
+*.asc
+.gnupg/
+
+# OAuth / JWT
+*.jwk
+*.jwks
+
+# ==================== PASSWORD / AUTH FILES ====================
+*.htpasswd
+*.htaccess
+*.netrc
+*.pgpass
+*.my.cnf
+
+# Password manager files
+*.kdbx
+*.kdb
+
+# Crypto wallets
+wallet.dat
+*.wallet
+
+# ==================== CLOUD CREDENTIALS ====================
+.aws/
+.gcloud/
+.azure/
+*.boto
+.s3cfg
+
+# ==================== TOOL AUTH ====================
+# These may contain auth tokens or registry credentials
+.npmrc
+.pypirc
+.git-credentials
+.gitcredentials
+.dockercfg
+.docker/config.json
+
+# ==================== HISTORY FILES ====================
+# May contain typed passwords, queries, or sensitive commands
+.*_history
+.python_history
+.node_repl_history
+.psql_history
+.mysql_history
+.sqlite_history
+.bash_history
+.zsh_history
+
+# ==================== VPN / REMOTE ACCESS ====================
+*.ovpn
+*.rdp
+*.vnc
+
+# ==================== ENCRYPTED FILES ====================
+*.enc
+*.encrypted
+
+# ==================== TERRAFORM / IAC ====================
+*.tfvars
+*.tfstate
+*.tfstate.backup
+
+# ==================== USER DATA ====================
+backups/
+exports/
+logs/
+data/
+
+# ==================== BUILD OUTPUTS ====================
+# Large binary files not useful for AI context
+build/
+dist/
+installer_output/
+*.exe
+*.msi
+
+# ==================== CACHE / TEMP ====================
+__pycache__/
+*.pyc
+.mypy_cache/
+.pytest_cache/
+.cache/
+*.tmp
+*.bak
+
+# ==================== ARCHIVES ====================
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.tar
+*.gz
+*.bz2
+*.xz
+
+# ==================== MEMORY / DEBUG DUMPS ====================
+*.dmp
+*.dump
+*.mdmp
+*.hdmp
+core
+core.*
+*.stackdump
+*.crash
+*.crashlog
+
+# ==================== MEDIA FILES ====================
+screenshots/
+recordings/
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.webm
+
+# ==================== SESSION / CACHE FILES ====================
+*.session
+*.sessions
+.session/
+sessions/
+*.cookie
+*.cookies
+cookies/
+.cookies/
+
+# ==================== API TESTING ====================
+*.postman_collection.json
+*.postman_environment.json
+insomnia.json
+.insomnia/
+thunder-tests/
+*.http
+*.rest
+
+# ==================== CONFIG MANAGER SECRETS ====================
+ansible_vault.*
+vault.yml
+vault.yaml
+*vault*.yml
+*vault*.yaml
+kubeconfig
+*.kubeconfig
+
+# ==================== PASSWORD MANAGER EXPORTS ====================
+*.1pif
+*.1pux
+*.agilekeychain
+*.opvault
+*.lastpass
+*.dashlane
+passwords.csv
+passwords.txt
+credentials.csv
+credentials.txt
+
+# ==================== DIFF / PATCH FILES ====================
+*.patch
+*.diff
+*.rej
+patches/
+
+# ==================== PROFILER OUTPUTS ====================
+*.prof
+*.profile
+*.trace
+*.perf
+
+# ==================== PYTHON PICKLES ====================
+*.pkl
+*.pickle
+*.joblib
+
+# ==================== MOBILE SECRETS ====================
+*.mobileprovision
+keystore.properties
+google-services.json
+GoogleService-Info.plist
+
+# ==================== FINANCIAL DATA ====================
+transactions/
+accounts/
+invoices/
+receipts/
+statements/
+*.qif
+*.ofx
+*.qfx
+*.qbo
+
+# ==================== PERSONAL NOTES ====================
+personal_notes.*
+my_notes.*
+notes.txt
+notes.md
+journal.*
+diary.*
+
+# ==================== REAL TEST DATA ====================
+test_data_real/
+real_data/
+production_data/
+prod_data/

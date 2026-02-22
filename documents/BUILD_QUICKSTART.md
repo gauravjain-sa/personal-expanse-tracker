@@ -80,7 +80,8 @@ expanse-tracker/
 **For Users:**
 - Distribute: `ExpenseTracker_Setup_v1.0.0.exe`
 - Size: ~50-80 MB
-- Requirements: Windows 10 or later (no Python needed!)
+- **100% self-contained** — users need nothing else (no Python, no downloads)
+- Requirements: Windows 10 or later
 
 **Data Location (After Install):**
 - User data: `%APPDATA%\Expense Tracker\`
@@ -118,6 +119,5 @@ Edit these files:
 
 ## Need Help?
 
-- Full guide: See `DEPLOYMENT_GUIDE.md`
+- Full guide: See `DEPLOYMENT_GUIDE.md` (in this same documents/ folder)
 - Issues: Open a GitHub issue
-- Email: support@yourcompany.com

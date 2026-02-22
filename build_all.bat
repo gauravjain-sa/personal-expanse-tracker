@@ -1,6 +1,7 @@
 @echo off
 :: Automated Build Script for Expense Tracker
 :: This script builds the executable and creates the installer
+:: Usage: Just double-click or run from command line
 
 echo ========================================
 echo Expense Tracker - Automated Build
@@ -52,13 +53,19 @@ if errorlevel 1 (
 echo.
 echo [4/4] Creating installer with Inno Setup...
 
-:: Check if Inno Setup is installed
-set INNO_PATH="C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
-if not exist %INNO_PATH% (
-    echo WARNING: Inno Setup not found at default location.
+:: Check if Inno Setup is installed (check both common locations)
+set INNO_PATH=
+if exist "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" (
+    set INNO_PATH="C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+) else if exist "C:\Program Files\Inno Setup 6\ISCC.exe" (
+    set INNO_PATH="C:\Program Files\Inno Setup 6\ISCC.exe"
+)
+
+if not defined INNO_PATH (
+    echo WARNING: Inno Setup not found!
     echo.
     echo Please install Inno Setup 6 from: https://jrsoftware.org/isdl.php
-    echo Or manually compile installer.iss using Inno Setup.
+    echo Then run this script again.
     echo.
     echo You can still distribute the folder: dist\ExpenseTracker\
     pause
@@ -81,12 +88,14 @@ echo Executable: dist\ExpenseTracker\ExpenseTracker.exe
 echo Installer:  installer_output\ExpenseTracker_Setup_v1.0.0.exe
 echo.
 echo The installer is ready to distribute to users!
+echo The installer is 100%% self-contained - users need nothing else.
 echo.
 
 :: Ask if user wants to open output folder
 choice /C YN /M "Do you want to open the output folder"
 if errorlevel 2 goto end
 if errorlevel 1 (
+    if not exist "installer_output" mkdir installer_output
     start "" "installer_output"
 )
 
